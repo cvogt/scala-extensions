@@ -1,4 +1,5 @@
 scala-extensions: Useful extensions for the Scala standard library
+http://cvogt.org/scala-extensions/
 
 For usage see:
 src/test/scala/*
@@ -11,3 +12,4 @@ resolvers ++= Seq(
 )
 
 libraryDependencies += "org.cvogt" %% "scala-extensions" % "0.1"
+

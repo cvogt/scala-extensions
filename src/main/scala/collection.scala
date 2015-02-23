@@ -74,4 +74,12 @@ object `package`{
         throw new UnsupportedOperationException("empty.reduceLeftWhile")
     }
   }
+  implicit class StreamCompanionExtensions(s: Stream.type){
+    /** Creates an infinite Stream of values.
+    @param initial first value
+    @param next    compute next value from current one
+    */
+    def unfold[S](initial: S)(next: S => S): Stream[S]
+      = Stream.cons(initial, unfold(next(initial))(next))
+  }
 }

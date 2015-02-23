@@ -143,13 +143,24 @@ class CollectionTest extends FunSuite{
         } yield Some(c - n))
       }
     )
-   intercept[UnsupportedOperationException](
+    intercept[UnsupportedOperationException](
       List[Option[Int]]().reduceWhile{(current,next) => 
         (for{
           c <- current
           n <- next
         } yield Some(c - n))
       }
+    )
+
+    assert(
+      45 ==
+      Stream.unfold(1)(_+1).reduceWhile((a,b) => Option(a+b).filter(_ => b < 10))
+    )
+  }
+  test("Stream.unfold"){
+    assert(
+      Seq(1,2,3,4,5,6,7,8,9,10) ===
+      Stream.unfold(1)(_+1).take(10).toSeq
     )
   }
 }
