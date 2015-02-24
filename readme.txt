@@ -16,10 +16,11 @@ src/test/scala/*
 
 Sbt setup:
 
+libraryDependencies += "org.cvogt" %% "scala-extensions" % "0.2"
+
 resolvers ++= Seq(
   "Sonatype Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots",
   "Sonatype Releases" at "https://oss.sonatype.org/service/local/staging/deploy/maven2"
 )
 
-libraryDependencies += "org.cvogt" %% "scala-extensions" % "0.1"
 
