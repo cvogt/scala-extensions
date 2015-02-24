@@ -6,7 +6,8 @@ import scala.annotation.tailrec
 object `package`{
   implicit class IterableLikeExtensions[A, Repr](coll: IterableLike[A, Repr]){
     /** Eliminates duplicates based in the given key function.
-    @param toKey maps elements to a key, which is used for comparison */
+    There is no guarantee which element stays in case elements are removed.
+    @param toKey maps elements to a key, which is used for comparison*/
     def distinctBy[B, That](toKey: A => B)(implicit bf: CanBuildFrom[Repr, A, That]) = {
       val builder = bf(coll.repr)
       val keys = mutable.Set[B]()
@@ -73,13 +74,5 @@ object `package`{
       else
         throw new UnsupportedOperationException("empty.reduceLeftWhile")
     }
-  }
-  implicit class StreamCompanionExtensions(s: Stream.type){
-    /** Creates an infinite Stream of values.
-    @param initial first value
-    @param next    compute next value from current one
-    */
-    def unfold[S](initial: S)(next: S => S): Stream[S]
-      = Stream.cons(initial, unfold(next(initial))(next))
   }
 }

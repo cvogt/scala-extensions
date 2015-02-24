@@ -154,13 +154,7 @@ class CollectionTest extends FunSuite{
 
     assert(
       45 ==
-      Stream.unfold(1)(_+1).reduceWhile((a,b) => Option(a+b).filter(_ => b < 10))
-    )
-  }
-  test("Stream.unfold"){
-    assert(
-      Seq(1,2,3,4,5,6,7,8,9,10) ===
-      Stream.unfold(1)(_+1).take(10).toSeq
+      Stream.iterate(1)(_+1).reduceWhile((a,b) => Option(a+b).filter(_ => b < 10))
     )
   }
 }
