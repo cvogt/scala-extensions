@@ -1,46 +1,40 @@
 package org.cvogt.scala.constraint
 import scala.annotation.implicitNotFound
 
-/** Verifies that From is NOT a subtype of To */
-@implicitNotFound(msg =
-"""
-Cannot prove that
-${From}
-is not a subtype of
-${To}"""
-)
-trait !<:[From, To]
-object !<:{
-  /** implicit that verifies !<: */
-  implicit def conforms_!<:[A,B](implicit ev: Allow_!<:[A, B]): A !<: B = null
+import boolean._
+
+/**
+type-level constraints for subtyping and type identity checks.
+*/
+object `package`{
+  @implicitNotFound(msg = "Cannot prove ${Left} =:= ${Right}")
+  type =:=[Left,Right] = scala.Predef.=:=[Left,Right]
+  @implicitNotFound(msg = "Cannot prove ${Left} <:< ${Right}")
+  type <:<[Left,Right] = scala.Predef.<:<[Left,Right]
+
+  @implicitNotFound(msg = """Cannot prove ${Left} !<:< ${Right}""")
+  type !<:<[Left,Right] = ![<:<[Left,Right]]
+  @implicitNotFound(msg = """Cannot prove ${Left} !=:= ${Right}""")
+  type !=:=[Left,Right] = ![=:=[Left,Right]]
+
+
+  @implicitNotFound(msg = """Cannot prove ${Left} >:> ${Right}""")
+  type  >:>[Right,Left] =  <:<[Left,Right]
+  @implicitNotFound(msg = """Cannot prove ${Left} !>:> ${Right}""")
+  type !>:>[Right,Left] = !<:<[Left,Right]
 }
-/** Helper class for !<: */
-trait Allow_!<:[From, To]
-object Allow_!<:{
-  /** Allow any two types fo !<: */
-  implicit def allow_!<:[From, To]: Allow_!<:[From, To] = null
-  /** Creates an ambigious implicit for From <: To to prevent that case. */
-  implicit def disallow_!<:[From, To](implicit ev: From <:< To): Allow_!<:[From, To] = null  
+/*
+/** Proves that Left is NOT a subtype of ${Right} */
+@implicitNotFound(msg = "Cannot prove ${Left} !<:< ${Right}")
+final class !<:<[Left, ${Right}]
+object !<:<{
+  implicit def prove[Left,Right](implicit ev: ![Left <:< ${Right}]) = new !<:<[Left,Right]
 }
 
-/** Verifies that From is not identical to To */
-@implicitNotFound(msg =
-"""
-Cannot prove that
-${From}
-is not identical to
-${To}"""
-)
-trait !=:=[From, To]
+/** Proves that Left is NOT identical to ${Right} */
+@implicitNotFound(msg = "Cannot prove ${Left} !=:= ${Right}")
+final class !=:=[Left, ${Right}]
 object !=:={
-  /** implicit that verifies !=:= */
-  implicit def conforms_!=:=[A,B](implicit ev: Allow_!=:=[A, B]): A !=:= B = null  
+  implicit def prove[Left,Right](implicit ev: ![Left =:= ${Right}]) = new !=:=[Left,Right]
 }
-/** Helper class for !=:= */
-trait Allow_!=:=[From, To]
-object Allow_!=:={
-  /** Allow any two types fo !=:= */
-  implicit def allow_!=:=[From, To]: Allow_!=:=[From, To] = null
-  /** Creates an ambigious implicit for From =:= To to prevent that case. */
-  implicit def disallow_!=:=[From, To](implicit ev: From =:= To): Allow_!=:=[From, To] = null
-}
+*/

@@ -2,6 +2,11 @@ scala-extensions: Useful extensions for the Scala standard library
 http://cvogt.org/scala-extensions/
 
 Contents:
+Type-level constraints (org.cvogt.constraints)
+- Comparisons: <:<, =:=, >:>, !=:=, !<:<, !>:>, e.g. String !=:= And
+- Boolean Algebra: True, False, ==, !, &&, ||, Implies, Xor
+- Subset tests: In, NotIn, e.g. Int NotIn (Any,AnyRef,AnyVal)
+
 Collection extensions (org.cvogt.collection)
 - distinctBy - remove duplicates by key
 - foldWhile / reduceWhile - stoppable accumulation
