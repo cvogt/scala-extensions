@@ -1,5 +1,27 @@
 package org.cvogt.scala.debug
 import java.io.{OutputStream, PrintStream}
+import scala.collection._
+
+object `package`{
+  implicit class AnyExtensions[T](val any: T) extends AnyVal{
+    def println = {
+      Predef.println(any)
+      any
+    }
+  }  
+  /* FIXME: maintain return type
+  implicit class GenTraversableOnceDebugExtensions[A](val coll: GenTraversableOnce[A]) extends AnyVal{
+    def printlnEach = {
+      coll.foreach(println)
+      coll
+    }
+    def foreach2(f: A => Unit) = {
+      coll.foreach(f)
+      coll
+    }
+  }
+  */
+}
 
 /** Suppresses JVM output to stdout and stderr in a block of code
   *
