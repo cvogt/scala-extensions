@@ -18,15 +18,16 @@ final class False
 @implicitNotFound(msg = """Cannot prove ![${Constraint}]""")
 final class ![Constraint]
 object !{
-  implicit def prove[Constraint](implicit ev: Helper_![Constraint]) = new ![Constraint]
+  implicit def prove[Constraint](implicit ev: InvertDeferredForBetterError[Constraint]) = new ![Constraint]
 }
 
-final class Helper_![Constraint]
-object Helper_!{ // For better error message than ambigious implicit
+/* Better error message than ambiguous implicit for ! constraint */
+final class InvertDeferredForBetterError[Constraint]
+object InvertDeferredForBetterError{
   /** Implicit that always succeeds */
-  implicit def succeed[Constraint] = new Helper_![Constraint]
+  implicit def succeed[Constraint] = new InvertDeferredForBetterError[Constraint]
   /** Creates an ambigious implicit if Constraint holds. */
-  implicit def prove[Constraint](implicit ev: Constraint) = new Helper_![Constraint]
+  implicit def prove[Constraint](implicit ev: Constraint) = new InvertDeferredForBetterError[Constraint]
 }
 
 /** Proves both Left and Right */
@@ -43,7 +44,7 @@ object Implies{
   implicit def prove[Left,Right](implicit ev: ![Left] || Right) = new Implies[Left,Right]
 }
 
-/** Proves Left Implies Right */
+/** Proves either Left or Right but not both */
 @implicitNotFound(msg = "Cannot prove ${Left} Implies ${Right}")
 final class Xor[Left, Right]
 object Xor{
@@ -57,7 +58,7 @@ object =={
   implicit def prove[Left,Right](implicit ev: ![Left Xor Right]) = new ==[Left,Right]
 }
 
-/** Proves either Left or Right */
+/** Proves either Left or Right or both */
 @implicitNotFound(msg = "Cannot prove ${Left} || ${Right}")
 final class ||[Left, Right]
 object ||{

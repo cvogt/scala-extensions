@@ -20,7 +20,8 @@ libraryDependencies += "org.cvogt" %% "scala-extensions" % "0.2"
 
 resolvers ++= Seq(
   "Sonatype Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots",
-  "Sonatype Releases" at "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+  "Sonatype Releases" at "https://oss.sonatype.org/service/local/repositories/releases/content",
+  "Sonatype Staging" at "https://oss.sonatype.org/service/local/staging/deploy/maven2"
 )
 
 

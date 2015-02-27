@@ -13,8 +13,8 @@ class BooleanTest extends FunSuite{
     prove[True]
     prove[![False]]
     prove[![![True]]]
-    assertTypeError("prove0[False]")
-    assertTypeError("prove0[![True]]")
+    assertTypeError("prove[False]")
+    assertTypeError("prove[![True]]")
 
     // commutative ==
     prove[True == True]
