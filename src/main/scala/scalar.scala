@@ -4,7 +4,7 @@ import scala.collection.generic.CanBuildFrom
 import scala.annotation.tailrec
 /** Extensions for scalar Scala types like String, Boolean, Int, etc. */
 object `package`{
-  implicit class BooleanExtensions(left: Boolean){
+  implicit class BooleanExtensions(val left: Boolean) extends AnyVal{
     /** Boolean algebra implication. */
     def implies(right: => Boolean) = !left || right
     

@@ -4,7 +4,7 @@ import scala.collection.generic.CanBuildFrom
 import scala.annotation.tailrec
       
 object `package`{
-  implicit class IterableLikeExtensions[A, Repr](coll: IterableLike[A, Repr]){
+  implicit class IterableLikeExtensions[A, Repr](val coll: IterableLike[A, Repr]) extends AnyVal{
     /** Eliminates duplicates based in the given key function.
     There is no guarantee which element stays in case elements are removed.
     @param toKey maps elements to a key, which is used for comparison*/
@@ -21,7 +21,7 @@ object `package`{
       builder.result()
     }
   }
-  implicit class GenTraversableOnceExtensions[A](coll: GenTraversableOnce[A]){
+  implicit class GenTraversableOnceExtensions[A](val coll: GenTraversableOnce[A]) extends AnyVal{
     /**
     Fold while accumulation function returns Some. Stops on first None.
 
