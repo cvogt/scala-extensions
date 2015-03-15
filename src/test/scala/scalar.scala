@@ -1,4 +1,4 @@
-package org.cvogt.test.scalar
+package org.cvogt.test.scala.scalar
 
 import org.scalatest.FunSuite
 import org.scalactic.TypeCheckedTripleEquals._

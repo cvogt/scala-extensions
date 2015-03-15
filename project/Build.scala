@@ -16,7 +16,7 @@ object MyBuild extends Build{
       //scalacOptions ++= Seq("-Xprint:patmat", "-Xshow-phases"),
       testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-oFD"),
       parallelExecution := false, // <- until TMap thread-safety issues are resolved
-      version := "0.2.1",
+      version := "0.3-SNAPSHOT",
       organizationName := "Jan Christopher Vogt",
       organization := "org.cvogt",
       scalacOptions in (Compile, doc) <++= (version,sourceDirectory in Compile,name).map((v,src,n) => Seq(
@@ -39,7 +39,7 @@ object MyBuild extends Build{
       publishArtifact in Test := false,
       pomIncludeRepository := { _ => false },
       makePomConfiguration ~= { _.copy(configurations = Some(Seq(Compile, Runtime, Optional))) },
-      licenses += ("Creative Commons Attribution-ShareAlike 4.0 International", url("https://creativecommons.org/licenses/by-sa/4.0/")),
+      licenses += ("Two-clause BSD-style license", url("http://github.com/cvogt/"+projectName+"/blob/master/LICENSE.txt")),
       homepage := Some(url("http://github.com/cvogt/"+projectName)),
       startYear := Some(2015),
       pomExtra :=
