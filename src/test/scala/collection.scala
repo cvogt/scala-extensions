@@ -23,6 +23,22 @@ class CollectionTest extends FunSuite{
     val ps5: Set[Person] = ps4
   }
 
+  test("concat"){
+    assert(
+      "123" ===
+      List("1","2","3").concat
+    )
+    assert(
+      "1,2,3" ===
+      List("1","2","3").concat(",")
+    )
+    assert(
+      ":1,2,3;" ===
+      List("1","2","3").concat(":",",",";")
+    )
+    assertTypeError("List(1,2,3).concat")
+  }
+
   def liftOptionOrElse[A,B,C]
     (f: (A,B) => C)
     : (((Option[A],Option[B])) => Option[C]) => (Option[A],Option[B])  => Option[C]

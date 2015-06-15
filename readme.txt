@@ -10,13 +10,14 @@ Type-level constraints (org.cvogt.constraints)
 Collection extensions (org.cvogt.collection)
 - distinctBy - remove duplicates by key
 - foldWhile / reduceWhile - stoppable accumulation
+- concat - type-safe alternative to mkString
 
 For usage see:
 src/test/scala/*
 
 Sbt setup:
 
-libraryDependencies += "org.cvogt" %% "scala-extensions" % "0.2"
+libraryDependencies += "org.cvogt" %% "scala-extensions" % "0.3.0"
 
 resolvers ++= Seq(
   "Sonatype Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots",
