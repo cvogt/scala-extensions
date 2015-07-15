@@ -2,13 +2,15 @@ package org.cvogt.scala.collection
 import scala.collection._
 import scala.collection.generic.CanBuildFrom
 import scala.annotation.tailrec
+import scala.collection.mutable.Builder
+
       
 object `package`{
-  implicit class IterableLikeExtensions[A, Repr](val coll: IterableLike[A, Repr]) extends AnyVal{
-    /** Eliminates duplicates based in the given key function.
-    There is no guarantee which element stays in case elements are removed.
+  implicit class TraversableLikeExtensions[A, Repr](val coll: TraversableLike[A, Repr]) extends AnyVal{
+    /** Eliminates duplicates based on the given key function.
+    There is no guarantee which elements stay in case element two elements result in the same key.
     @param toKey maps elements to a key, which is used for comparison*/
-    def distinctBy[B, That](toKey: A => B)(implicit bf: CanBuildFrom[Repr, A, That]) = {
+    def distinctBy[B, That](toKey: A => B)(implicit bf: CanBuildFrom[Repr, A, That]): That = {
       val builder = bf(coll.repr)
       val keys = mutable.Set[B]()
       for(element <- coll){
@@ -20,7 +22,60 @@ object `package`{
       }
       builder.result()
     }
+
+    /** Groups elements given an equivalence function.
+    @param symmetric comparison function which tests whether the two arguments are considered equivalent. */
+    def groupWith[That](equivalent: (A,A) => Boolean)(implicit bf: CanBuildFrom[Repr, A, That]): Seq[That] = {
+      var l = List[(A, Builder[A, That])]()
+      for (elem <- coll) {
+        val b = l.find{
+          case (sample, group) => equivalent(elem,sample)
+        }.map(_._2).getOrElse{
+          val bldr = bf(coll.repr)
+          l = (elem, bldr) +: l
+          bldr
+        }
+        b += elem
+      }
+      val b = Vector.newBuilder[That]
+      for ((k, v) <- l.reverse)
+        b += v.result
+      b.result
+    }
+
+    /** Eliminates duplicates based on the given equivalence function.
+    There is no guarantee which elements stay in case element two elements are considered equivalent.
+    this has runtime O(n^2)
+    @param symmetric comparison function which tests whether the two arguments are considered equivalent. */
+    def distinctWith[That](equivalent: (A,A) => Boolean)(implicit bf: CanBuildFrom[Repr, A, That]): That = {
+      var l = List[A]()
+      val b = bf(coll.repr)
+      for (elem <- coll) {
+        l.find{
+          case first => equivalent(elem,first)
+        }.getOrElse{
+          l = elem +: l
+          b += elem
+        }
+      }
+      b.result
+    }
   }
+  implicit class TraversableExtensions[A](val coll: Traversable[A]) extends AnyVal{
+    /** tests weather the given collection has duplicates using default equality == */
+    def containsDuplicates = coll.groupBy(identity).exists(_._2.size > 1)
+
+    /** tests weather at least two elements map to the same key using the given function
+    @param toKey maps elements to a key, which is used for comparison*/
+    def containsDuplicatesBy[B](key: A => B) = coll.groupBy(key).exists(_._2.size > 1)
+
+    /** tests weather at least two elements are considered equivalent using the given function
+    this has runtime O(n^2)
+    @param symmetric comparison function which tests whether the two arguments are considered equivalent.
+    */
+    def containsDuplicatesWith(equivalent: (A,A) => Boolean) = coll.groupWith(equivalent).exists(_.size > 1)
+  }
+
   /**
    Extension methods on String collections
    *  @define coll collection or iterator
@@ -68,10 +123,7 @@ object `package`{
     @inline
     def concat: String = coll.mkString
   }  
-  
-  /**
-   Extension methods on collections
-   */
+
   implicit class GenTraversableOnceExtensions[A](val coll: GenTraversableOnce[A]) extends AnyVal{
     /**
     Fold while accumulation function returns Some. Stops on first None.

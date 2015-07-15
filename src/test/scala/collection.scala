@@ -6,11 +6,13 @@ import org.scalactic.TypeCheckedTripleEquals._
 import org.cvogt.scala.collection._
 
 case class Person(name: String, age: Int)
+object chris extends Person("Chris",99)
+object marcos extends Person("Marcos",99)
 class CollectionTest extends FunSuite{
   test("distinctBy"){
     val ps = List(
-      Person("Chris",99),
-      Person("Marcos",99)
+      chris,
+      marcos
     )
     assert(2 === ps.distinct.size)
     assert(1 === ps.distinctBy(_.age).size)
@@ -22,7 +24,58 @@ class CollectionTest extends FunSuite{
     val ps4 = ps.toSet.distinctBy(_.age)
     val ps5: Set[Person] = ps4
   }
-
+  test("groupWith"){
+    val ps = List(chris,marcos)
+    assert(
+      Seq(List(chris),List(marcos)) ===
+      ps.groupWith((a,b) => a.name == b.name)
+    )
+    assert(
+      Seq(List(chris,marcos)) ===
+      ps.groupWith((a,b) => a.age == b.age)
+    )
+    assert(
+      Seq(List(1,3),List(2,4)) ===
+      List(1,2,3,4).groupWith(_ % 2 == _ % 2)
+    )
+  }
+   test("distinctWith"){
+    val ps = List(chris,marcos)
+    assert(
+      List(chris,marcos) ===
+      ps.distinctWith((a,b) => a.name == b.name)
+    )
+    assert(
+      List(chris) ===
+      ps.distinctWith((a,b) => a.age == b.age)
+    )
+  }
+  test("duplicates"){
+    assert(
+      false === List(1,2,3).containsDuplicates
+    )
+    assert(
+      true === List(1,2,3,1).containsDuplicates
+    )
+    assert(
+      false === List(2,4).containsDuplicatesBy(identity)
+    )
+    assert(
+      true === List(2,4).containsDuplicatesBy(_ % 2)
+    )
+    assert(
+      true === List(1,2,3,1).containsDuplicatesWith((a,b) => true)
+    )
+    assert(
+      false === List(1,2,3,1).containsDuplicatesWith((a,b) => false)
+    )
+    assert(
+      true === List(1,2,3,1).containsDuplicatesWith((a,b) => a == b)
+    )
+    assert(
+      false === List(1,2,3).containsDuplicatesWith((a,b) => a == b)
+    )    
+  }
   test("concat"){
     assert(
       "123" ===
