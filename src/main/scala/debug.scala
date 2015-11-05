@@ -48,3 +48,22 @@ object SUPPRESS_OUTPUT{
     override def write(b: Array[Byte], off: Int, len: Int) = ()
   }
 }
+
+import scala.language.experimental.macros
+import scala.reflect.macros.blackbox.Context
+
+object printCodeAfterTyper {
+  /** Prints code after implicits, macros and code desugaring have been applied. Returns passed value just like identity(code). */
+  def apply[T]( code: T ): T = macro printCodeAfterTyperMacro[T]
+  def printCodeAfterTyperMacro[T]( c: Context )( code: c.Expr[T] ): c.Expr[T] = {
+    import org.cvogt.scala.string.StringExtensions
+    val fileLine = code.tree.pos.source.file.absolute.path + ":" + code.tree.pos.line
+    println("-"*80)
+    println( fileLine + ": printCodeAfterTyper")
+    println( "Code:\n" + code.tree.toString.indent )
+    println()
+    println( "AST:\n" + c.universe.showRaw( code.tree ).indent )
+    println("-"*80)
+    code
+  }
+}

@@ -10,7 +10,8 @@ object MyBuild extends Build{
       scalaVersion := "2.11.7",
       description := "Composable Records and type-indexed Maps for Scala",
       libraryDependencies ++= Seq(
-        "org.scalatest" %% "scalatest" % "2.2.4" % "test"
+        "org.scalatest" %% "scalatest" % "2.2.4" % "test",
+        "org.scala-lang" % "scala-reflect" % scalaVersion.value % "provided"
       ),
       scalacOptions ++= Seq("-feature", "-deprecation", "-unchecked"),
       //scalacOptions ++= Seq("-Xprint:patmat", "-Xshow-phases"),
