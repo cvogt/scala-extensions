@@ -7,7 +7,7 @@ object MyBuild extends Build{
   lazy val aRootProject = Project(id = projectName, base = file("."),
     settings = Seq(
       name := projectName,
-      scalaVersion := "2.11.5",
+      scalaVersion := "2.11.7",
       description := "Composable Records and type-indexed Maps for Scala",
       libraryDependencies ++= Seq(
         "org.scalatest" %% "scalatest" % "2.2.4" % "test"
