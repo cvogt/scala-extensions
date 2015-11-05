@@ -2,6 +2,7 @@ scala-extensions: Useful extensions for the Scala standard library
 http://cvogt.org/scala-extensions/
 
 Contents:
+
 Type-level constraints (org.cvogt.constraints)
 - Comparisons: <:<, =:=, >:>, !=:=, !<:<, !>:>, e.g. String !=:= And
 - Boolean Algebra: True, False, ==, !, &&, ||, Implies, Xor
@@ -12,12 +13,20 @@ Collection extensions (org.cvogt.collection)
 - foldWhile / reduceWhile - stoppable accumulation
 - concat - type-safe alternative to mkString
 
+String extensions
+- stripIndent - alternative to stripMargin not requiring |
+- indent/indent(n) - indents each line
+- commonLinePrefix, trimLeft, trimRight, trimLinesLeft, trimLinesRight
+
+Debug (org.cvogt.scala.debug)
+- printCodeAfterTyper - Prints code after implicits, macros and code desugaring have been applied.
+
 For usage see:
 src/test/scala/*
 
 Sbt setup:
 
-libraryDependencies += "org.cvogt" %% "scala-extensions" % "0.4.0"
+libraryDependencies += "org.cvogt" %% "scala-extensions" % "0.4.1"
 
 resolvers ++= Seq(
   "Sonatype Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots",
