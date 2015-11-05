@@ -8,9 +8,11 @@ object MyBuild extends Build{
     settings = Seq(
       name := projectName,
       scalaVersion := "2.11.7",
+      crossScalaVersions := Seq("2.10.6",scalaVersion.value),
       description := "Composable Records and type-indexed Maps for Scala",
       libraryDependencies ++= Seq(
         "org.scalatest" %% "scalatest" % "2.2.4" % "test",
+        "org.typelevel" %% "macro-compat" % "1.0.5",
         "org.scala-lang" % "scala-reflect" % scalaVersion.value % "provided"
       ),
       scalacOptions ++= Seq("-feature", "-deprecation", "-unchecked"),
