@@ -6,6 +6,10 @@ import scala.collection.mutable.Builder
 
       
 object `package`{
+  implicit class SeqLikeExtensions[A, Repr](val coll: SeqLike[A, Repr]) extends AnyVal{
+    /** type-safe contains check */
+    def containsTyped(t: A) = coll.contains(t)
+  }
   implicit class TraversableLikeExtensions[A, Repr](val coll: TraversableLike[A, Repr]) extends AnyVal{
     /** Eliminates duplicates based on the given key function.
     There is no guarantee which elements stay in case element two elements result in the same key.

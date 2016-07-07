@@ -9,6 +9,15 @@ case class Person(name: String, age: Int)
 object chris extends Person("Chris",99)
 object marcos extends Person("Marcos",99)
 class CollectionTest extends FunSuite{
+  test("SeqLike containsTyped"){
+    val s = Seq(1)
+    assert( s contains 1 )
+    assert( s containsTyped 1 )
+    assert( !(s contains 2) )
+    assert( !(s containsTyped 2) )
+    assert( !(s contains "asdf") )
+    assertTypeError( """ !(s containsTyped "asdf") """ )
+  }
   test("distinctBy"){
     val ps = List(
       chris,
