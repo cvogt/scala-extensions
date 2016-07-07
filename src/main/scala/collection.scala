@@ -128,6 +128,13 @@ object `package`{
     def concat: String = coll.mkString
   }  
 
+  implicit class BooleanGenTraversableOnceExtensions(val coll: GenTraversableOnce[Boolean]) extends AnyVal{
+    /** returns true if every element is true */
+    def allTrue = coll.forall(identity)
+    /** returns true if if element returns true */
+    def anyTrue = coll.exists(identity)
+  }
+
   implicit class GenTraversableOnceExtensions[A](val coll: GenTraversableOnce[A]) extends AnyVal{
     /**
     Fold while accumulation function returns Some. Stops on first None.

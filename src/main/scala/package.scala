@@ -1,7 +1,5 @@
 package org.cvogt.scala
 object `package`{
-  //def all(coll: GenTraversableOnce[Boolean]) = coll.forall(identity)
-  //def any(coll: GenTraversableOnce[Boolean]) = coll.exists(identity)
   /**
   Allows to provide default value for type parameter.
   NOTE: Be careful when you use this. Result type inference order reasoning can be very tricky.
