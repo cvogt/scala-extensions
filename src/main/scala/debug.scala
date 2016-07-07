@@ -21,6 +21,18 @@ object `package`{
     }
   }
   */
+  implicit class ThrowableExtensions( t: Throwable ) {
+    def showStackTrace: String = {
+      import java.io._
+      val sw = new StringWriter()
+      val pw = new PrintWriter( sw )
+      t.printStackTrace( pw )
+      val s = sw.toString
+      sw.close
+      pw.close
+      s
+    }
+  }
 }
 
 /** Suppresses JVM output to stdout and stderr in a block of code

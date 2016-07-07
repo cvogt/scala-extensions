@@ -7,19 +7,19 @@ object MyBuild extends Build{
   lazy val aRootProject = Project(id = projectName, base = file("."),
     settings = Seq(
       name := projectName,
-      scalaVersion := "2.11.7",
+      scalaVersion := "2.11.8",
       crossScalaVersions := Seq("2.10.6",scalaVersion.value),
       description := "Composable Records and type-indexed Maps for Scala",
       libraryDependencies ++= Seq(
-        "org.scalatest" %% "scalatest" % "2.2.4" % "test",
-        "org.typelevel" %% "macro-compat" % "1.0.5",
+        "org.scalatest" %% "scalatest" % "3.0.0-RC4" % "test",
+        "org.typelevel" %% "macro-compat" % "1.0.7",
         "org.scala-lang" % "scala-reflect" % scalaVersion.value % "provided"
       ),
       scalacOptions ++= Seq("-feature", "-deprecation", "-unchecked"),
       //scalacOptions ++= Seq("-Xprint:patmat", "-Xshow-phases"),
       testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-oFD"),
       parallelExecution := false, // <- until TMap thread-safety issues are resolved
-      version := "0.4.1",
+      version := "0.4.2",
       organizationName := "Jan Christopher Vogt",
       organization := "org.cvogt",
       scalacOptions in (Compile, doc) <++= (version,sourceDirectory in Compile,name).map((v,src,n) => Seq(
