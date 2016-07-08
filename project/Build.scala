@@ -12,7 +12,7 @@ object MyBuild extends Build{
       description := "Composable Records and type-indexed Maps for Scala",
       libraryDependencies ++= Seq(
         "org.scalatest" %% "scalatest" % "3.0.0-RC4" % "test",
-        "org.typelevel" %% "macro-compat" % "1.1.1",
+        "org.typelevel" %% "macro-compat" % "1.1.0",
         "org.scala-lang" % "scala-reflect" % scalaVersion.value % "provided"
       ),
       scalacOptions ++= Seq("-feature", "-deprecation", "-unchecked"),

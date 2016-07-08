@@ -25,7 +25,7 @@ object `package`{
   }
   implicit class OptionExtensions[T](val option: Option[T]) extends AnyVal{
     /** type-safe contains check */
-    def containsTyped(t: T) = option contains t
+    def containsTyped(t: T) = option.exists(_ == t)
     /** returns the value inside of the option or throws an exception with the given error message if None */
     def getOrThrow(msg: String): T = option.getOrElse( throw new RuntimeException(msg) )
   }

@@ -70,11 +70,8 @@ class PackageTest extends FunSuite{
   }
   test("Option containsTyped"){
     val s = Option(1)
-    assert( s contains 1 )
     assert( s containsTyped 1 )
-    assert( !(s contains 2) )
     assert( !(s containsTyped 2) )
-    assert( !(s contains "asdf") )
     assertTypeError( """ !(s containsTyped "asdf") """ )
   }
   test("Option getOrThrow"){
