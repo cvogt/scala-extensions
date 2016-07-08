@@ -1,9 +1,9 @@
-package org.cvogt.test.scalar
+package org.cvogt.test
 
 import org.scalatest.FunSuite
 import org.scalactic.TypeCheckedTripleEquals._
 
-import org.cvogt.scala.scalar._
+import org.cvogt.scala._
 
 class BooleanTest extends FunSuite{
   test("map"){

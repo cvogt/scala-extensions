@@ -12,11 +12,13 @@ Collection extensions (org.cvogt.collection)
 - distinctBy - remove duplicates by key
 - foldWhile / reduceWhile - stoppable accumulation
 - concat - type-safe alternative to mkString
+- containsTyped
 
 String extensions
 - stripIndent - alternative to stripMargin not requiring |
 - indent/indent(n) - indents each line
 - commonLinePrefix, trimLeft, trimRight, trimLinesLeft, trimLinesRight
+- containsTyped
 
 Debug (org.cvogt.scala.debug)
 - printCodeAfterTyper(...) - Prints code after implicits, macros and code desugaring have been applied.
@@ -33,12 +35,4 @@ src/test/scala/*
 
 Sbt setup:
 
-libraryDependencies += "org.cvogt" %% "scala-extensions" % "0.4.1"
-
-resolvers ++= Seq(
-  "Sonatype Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots",
-  "Sonatype Releases" at "https://oss.sonatype.org/service/local/repositories/releases/content",
-  "Sonatype Staging" at "https://oss.sonatype.org/service/local/staging/deploy/maven2"
-)
-
-
+libraryDependencies += "org.cvogt" %% "scala-extensions" % "0.5.0"

@@ -68,7 +68,7 @@ object printCodeAfterTyper {
   /** Prints code after implicits, macros and code desugaring have been applied. Returns passed value just like identity(code). */
   def apply[T]( code: T ): T = macro printCodeAfterTyperMacro[T]
   def printCodeAfterTyperMacro[T]( c: Context )( code: c.Expr[T] ): c.Expr[T] = {
-    import org.cvogt.scala.string.StringExtensions
+    import org.cvogt.scala.StringExtensions
     val fileLine = code.tree.pos.source.file.absolute.path + ":" + code.tree.pos.line
     println("-"*80)
     println( fileLine + ": printCodeAfterTyper")

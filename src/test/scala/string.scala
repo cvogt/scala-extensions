@@ -1,9 +1,9 @@
-package org.cvogt.test.scala.string
+package org.cvogt.test.scala
 
 import org.scalatest.FunSuite
 import org.scalactic.TypeCheckedTripleEquals._
 
-import org.cvogt.scala.string._
+import org.cvogt.scala._
 
 class StringTest extends FunSuite{
   test("commonLinePrefix"){
