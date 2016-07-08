@@ -19,7 +19,14 @@ String extensions
 - commonLinePrefix, trimLeft, trimRight, trimLinesLeft, trimLinesRight
 
 Debug (org.cvogt.scala.debug)
-- printCodeAfterTyper - Prints code after implicits, macros and code desugaring have been applied.
+- printCodeAfterTyper(...) - Prints code after implicits, macros and code desugaring have been applied.
+- (t: Throwable).showStackTrace that returns stack tract as string
+
+Type safety
+- safe"..." alternative to s"..." that requires explicit toString conversions rather than implicit
+
+Others
+- alternative `->` that works as constructor, extractor, type
 
 For usage see:
 src/test/scala/*
