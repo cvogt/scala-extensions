@@ -8,7 +8,10 @@ import org.cvogt.scala.constraint._
 trait A
 trait B extends A
 trait C
-
+class ANonCaseClass(i: Int)
+case class ACaseClass(i: Int)
+case object ACaseObject
+object ANonCaseObject
 class ConstraintTest extends FunSuite{
   test("<:<"){
     implicitly[A <:< A]
@@ -70,5 +73,15 @@ class ConstraintTest extends FunSuite{
     implicitly[Nothing !=:= Unit]
     implicitly[Nothing !=:= String]
     implicitly[Nothing !=:= Int]
+  }
+  test("CaseClass and SingletonObject type classes"){
+    implicitly[CaseClass[ACaseClass]]
+    assertTypeError("implicitly[CaseClass[ANonCaseClass]]")
+    implicitly[CaseClass[ACaseObject.type]]
+    assertTypeError("implicitly[CaseClass[ANonCaseObject.type]]")
+    assertTypeError("implicitly[SingletonObject[ACaseClass]]")
+    assertTypeError("implicitly[SingletonObject[ANonCaseClass]]")
+    implicitly[SingletonObject[ACaseObject.type]]
+    implicitly[SingletonObject[ANonCaseObject.type]]
   }
 }

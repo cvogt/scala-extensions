@@ -4,6 +4,7 @@ http://cvogt.org/scala-extensions/
 Contents:
 
 Type-level constraints (org.cvogt.constraints)
+- CaseClass and SingletonObject type classes
 - Comparisons: <:<, =:=, >:>, !=:=, !<:<, !>:>, e.g. String !=:= And
 - Boolean Algebra: True, False, ==, !, &&, ||, Implies, Xor
 - Subset tests: In, NotIn, e.g. Int NotIn (Any,AnyRef,AnyVal)
