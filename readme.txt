@@ -36,4 +36,4 @@ src/test/scala/*
 
 Sbt setup:
 
-libraryDependencies += "org.cvogt" %% "scala-extensions" % "0.5.0"
+libraryDependencies += "org.cvogt" %% "scala-extensions" % "0.5.1"
