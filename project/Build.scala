@@ -12,9 +12,15 @@ object MyBuild extends Build{
       description := "Composable Records and type-indexed Maps for Scala",
       libraryDependencies ++= Seq(
         "org.scalatest" %% "scalatest" % "3.0.0-RC4" % "test",
-        "org.typelevel" %% "macro-compat" % "1.1.0",
-        "org.scala-lang" % "scala-reflect" % scalaVersion.value % "provided"
-      ),
+        "org.scala-lang" % "scala-compiler" % scalaVersion.value % "provided"//,
+      ) ++
+      CrossVersion.partialVersion(scalaVersion.value).collect{
+        case (2, 10) =>
+          Seq(
+            "org.typelevel" %% "macro-compat" % "1.1.0",
+            compilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full)
+          )
+      }.toSeq.flatten,
       scalacOptions ++= Seq("-feature", "-deprecation", "-unchecked"),
       //scalacOptions ++= Seq("-Xprint:patmat", "-Xshow-phases"),
       testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-oFD"),

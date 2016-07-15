@@ -39,7 +39,7 @@ object !=:={
 }
 */
 
-import scala.reflect.macros.blackbox
+import scala.reflect.macros._
 import scala.language.experimental.macros
 
 /**
@@ -47,13 +47,13 @@ Type class for case classes
 */
 final class CaseClass[T]
 object CaseClass{
-  def checkCaseClassMacro[T:c.WeakTypeTag](c: blackbox.Context) = {
+  def checkCaseClassMacro[T:c.WeakTypeTag](c: blackbox.Context): c.Expr[CaseClass[T]] = {
     import c.universe._
     val T = c.weakTypeOf[T]
     if(
       !T.typeSymbol.isClass || !T.typeSymbol.asClass.isCaseClass
     ) c.error(c.enclosingPosition,s"$T does not have case modifier")
-    q"new _root_.org.cvogt.scala.constraint.CaseClass[$T]"
+    c.Expr[CaseClass[T]](q"new _root_.org.cvogt.scala.constraint.CaseClass[$T]")
   }
   /**
   fails compilation if T is not a case class
@@ -64,13 +64,13 @@ object CaseClass{
 
 final class SingletonObject[T]
 object SingletonObject{
-  def checkSingletonObjectMacro[T:c.WeakTypeTag](c: blackbox.Context) = {
+  def checkSingletonObjectMacro[T:c.WeakTypeTag](c: blackbox.Context): c.Expr[SingletonObject[T]] = {
     import c.universe._
     val T = c.weakTypeOf[T]
     if(
       !T.typeSymbol.isClass || !T.typeSymbol.asClass.isModuleClass
     ) c.error(c.enclosingPosition,s"$T is not an object")
-    q"new _root_.org.cvogt.scala.constraint.SingletonObject[$T]"
+    c.Expr[SingletonObject[T]](q"new _root_.org.cvogt.scala.constraint.SingletonObject[$T]")
   }
   /**
   fails compilation if T is not a singleton object class
