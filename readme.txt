@@ -3,11 +3,8 @@ http://cvogt.org/scala-extensions/
 
 Contents:
 
-Type-level constraints (org.cvogt.constraints)
-- CaseClass and SingletonObject type classes
-- Comparisons: <:<, =:=, >:>, !=:=, !<:<, !>:>, e.g. String !=:= And
-- Boolean Algebra: True, False, ==, !, &&, ||, Implies, Xor
-- Subset tests: In, NotIn, e.g. Int NotIn (Any,AnyRef,AnyVal)
+Type-level helpers
+- EnumerateSingletons - listing all objects extending a sealed trait
 
 Collection extensions (org.cvogt.collection)
 - distinctBy - remove duplicates by key
@@ -27,6 +24,12 @@ Debug (org.cvogt.scala.debug)
 
 Type safety
 - safe"..." alternative to s"..." that requires explicit toString conversions rather than implicit
+
+Type-level constraints (org.cvogt.constraints)
+- CaseClass and SingletonObject type classes
+- Comparisons: <:<, =:=, >:>, !=:=, !<:<, !>:>, e.g. String !=:= And
+- Boolean Algebra: True, False, ==, !, &&, ||, Implies, Xor
+- Subset tests: In, NotIn, e.g. Int NotIn (Any,AnyRef,AnyVal)
 
 Others
 - alternative `->` that works as constructor, extractor, type
