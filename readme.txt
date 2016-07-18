@@ -5,6 +5,7 @@ Contents:
 
 Type-level helpers
 - EnumerateSingletons - listing all objects extending a sealed trait
+- Defaults - object giving names access to a class's default values
 
 Collection extensions (org.cvogt.collection)
 - distinctBy - remove duplicates by key
