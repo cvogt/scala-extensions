@@ -9,18 +9,16 @@ object MyBuild extends Build{
       name := projectName,
       scalaVersion := "2.11.8",
       crossScalaVersions := Seq("2.10.6",scalaVersion.value),
-      description := "Composable Records and type-indexed Maps for Scala",
+      description := "Faithful extensions of the Scala standard library",
       libraryDependencies ++= Seq(
         "org.scalatest" %% "scalatest" % "3.0.0-RC4" % "test",
-        "org.typelevel" %% "macro-compat" % "1.1.0",
-        "org.scala-lang" % "scala-compiler" % scalaVersion.value % "provided",
-        compilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full)
+        "org.scala-lang" % "scala-compiler" % scalaVersion.value % "provided"
       ),
       scalacOptions ++= Seq("-feature", "-deprecation", "-unchecked"),
       //scalacOptions ++= Seq("-Xprint:patmat", "-Xshow-phases"),
       testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-oFD"),
       parallelExecution := false, // <- until TMap thread-safety issues are resolved
-      version := "0.5.1",
+      version := "0.5.2",
       organizationName := "Jan Christopher Vogt",
       organization := "org.cvogt",
       scalacOptions in (Compile, doc) <++= (version,sourceDirectory in Compile,name).map((v,src,n) => Seq(
@@ -43,7 +41,7 @@ object MyBuild extends Build{
       publishArtifact in Test := false,
       pomIncludeRepository := { _ => false },
       makePomConfiguration ~= { _.copy(configurations = Some(Seq(Compile, Runtime, Optional))) },
-      licenses += ("Two-clause BSD-style license", url("http://github.com/cvogt/"+projectName+"/blob/master/LICENSE.txt")),
+      licenses += ("Apache 2.0", url("http://www.apache.org/licenses/LICENSE-2.0")),
       homepage := Some(url("http://github.com/cvogt/"+projectName)),
       startYear := Some(2015),
       pomExtra :=

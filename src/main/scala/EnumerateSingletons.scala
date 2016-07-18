@@ -1,14 +1,12 @@
 package org.cvogt.scala
 import scala.reflect.macros.blackbox.Context
 import scala.language.experimental.macros
-import macrocompat.bundle
 
 object EnumerateSingletons {
   /** singleton objects transitively extending the given class or trait */
   def apply[A]: Set[A] = macro EnumerateSingletonsMacros.enumerateSingletonsMacros[A]
 }
 
-@bundle
 class EnumerateSingletonsMacros( val c: Context ) {
   import c.universe._
   def enumerateSingletonsMacros[T: c.WeakTypeTag]: Tree = {

@@ -3,17 +3,15 @@ package org.cvogt.scala
 import scala.reflect.macros.whitebox.Context
 import scala.language.dynamics
 import scala.language.experimental.macros
-import macrocompat.bundle
 
 object Defaults {
   /** returns the given type's default values in an anonymous class instance */
-  def apply[T]: Any = macro DefaultsMacros.apply[T]
+  def apply[T]: Any = macro DefaultsMacros.defaults[T]
 }
 
-@bundle
 class DefaultsMacros( val c: Context ) {
   import c.universe._
-  def apply[T: c.WeakTypeTag] = {
+  def defaults[T: c.WeakTypeTag] = {
     val T = weakTypeOf[T]
     if ( !isCaseClass( T ) )
       c.error( c.enclosingPosition, s"not a case class: $T" )
