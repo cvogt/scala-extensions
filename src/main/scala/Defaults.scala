@@ -18,7 +18,7 @@ class DefaultsMacros( val c: Context ) {
     q"new{ ..$defs }"
   }
 
-  def constructorFieldsTypesDefaults( tpe: Type ): List[( String, Type, Option[Tree] )] = {
+  private def constructorFieldsTypesDefaults( tpe: Type ): List[( String, Type, Option[Tree] )] = {
     val m = tpe.decls.collectFirst {
       case m: MethodSymbol if m.isPrimaryConstructor => m
     }.head.paramLists.flatten.zipWithIndex
@@ -29,6 +29,23 @@ class DefaultsMacros( val c: Context ) {
           field.infoIn( tpe ),
           {
             val method = TermName( "<init>$default$"+(i + 1) ).encodedName.toTermName
+            tpe.companion.member( method ) match {
+              case NoSymbol => None
+              case _        => Some( q"${tpe.typeSymbol.companion}.$method" )
+            }
+          }
+        )
+    }.toList
+  }
+
+  private def companionApplyFieldsTypesDefaults( tpe: Type ): List[( String, Type, Option[Tree] )] = {
+    tpe.companion.member( TermName( "apply" ) ).asTerm.alternatives.find( _.isSynthetic ).get.asMethod.paramLists.flatten.zipWithIndex.map {
+      case ( field, i ) =>
+        (
+          field.name.toTermName.decodedName.toString,
+          field.infoIn( tpe ),
+          {
+            val method = TermName( s"apply$$default$$${i + 1}" )
             tpe.companion.member( method ) match {
               case NoSymbol => None
               case _        => Some( q"${tpe.typeSymbol.companion}.$method" )
