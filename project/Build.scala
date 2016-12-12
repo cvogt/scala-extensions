@@ -7,11 +7,11 @@ object MyBuild extends Build{
   lazy val aRootProject = Project(id = projectName, base = file("."),
     settings = Seq(
       name := projectName,
-      scalaVersion := "2.11.8",
-      crossScalaVersions := Seq("2.10.6",scalaVersion.value),
+      scalaVersion := "2.12.0",
+      crossScalaVersions := Seq("2.10.6","2.11.8",scalaVersion.value),
       description := "Faithful extensions of the Scala standard library",
       libraryDependencies ++= Seq(
-        "org.scalatest" %% "scalatest" % "3.0.0-RC4" % "test",
+        "org.scalatest" %% "scalatest" % "3.0.0" % "test",
         "org.scala-lang" % "scala-compiler" % scalaVersion.value % "provided"
       ),
       scalacOptions ++= Seq("-feature", "-deprecation", "-unchecked"),
