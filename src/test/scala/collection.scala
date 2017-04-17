@@ -33,6 +33,19 @@ class CollectionTest extends FunSuite{
     val ps4 = ps.toSet.distinctBy(_.age)
     val ps5: Set[Person] = ps4
   }
+  test("Stream#distinctBy"){
+    val ps = Stream(
+      chris,
+      marcos
+    )
+    assert(2 === ps.distinct.size)
+    assert(1 === ps.distinctBy(_.age).size)
+    assert(2 === ps.distinctBy(identity).size)
+    assert(2 === ps.distinctBy(_.name).size)
+
+    // https://github.com/cvogt/scala-extensions/issues/5
+    assert(Stream.from(1).distinctBy(identity).take(5) === Stream(1, 2, 3, 4, 5))
+  }
   test("groupWith"){
     val ps = List(chris,marcos)
     assert(

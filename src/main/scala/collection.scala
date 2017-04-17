@@ -17,6 +17,9 @@ object `package` extends LowPriorityCollectionImplicits {
     def containsTyped(t: A) = coll.contains(t)
   }
 
+  implicit def ToStreamExtensions[A](coll: Stream[A]): StreamExtensions[A] =
+    new StreamExtensions[A](coll)
+
   implicit class TraversableExtensions[A](val coll: Traversable[A]) extends AnyVal{
     /** tests weather the given collection has duplicates using default equality == */
     def containsDuplicates = coll.groupBy(identity).exists(_._2.size > 1)
