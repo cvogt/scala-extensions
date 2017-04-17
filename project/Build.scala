@@ -8,7 +8,7 @@ object MyBuild extends Build{
     settings = Seq(
       name := projectName,
       scalaVersion := "2.12.0",
-      crossScalaVersions := Seq("2.10.6","2.11.8",scalaVersion.value),
+      crossScalaVersions := Seq("2.11.8",scalaVersion.value),
       description := "Faithful extensions of the Scala standard library",
       libraryDependencies ++= Seq(
         "org.scalatest" %% "scalatest" % "3.0.0" % "test",
